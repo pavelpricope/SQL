@@ -1,0 +1,46 @@
+CREATE TABLE Joke(
+	jid INTEGER NOT NULL UNIQUE,
+	joke CHAR(20) UNIQUE,
+	royalty INTEGER,
+	PRIMARY KEY (jid),
+	CHECK (jid>=0),
+	CHECK (royalty>=0)	
+);
+CREATE TABLE Gift(
+	gid INTEGER NOT NULL UNIQUE,
+	description CHAR(20) UNIQUE,
+	price INTEGER,
+	PRIMARY KEY (gid),
+	CHECK (gid>=0),
+	CHECK (price>=0)		
+);
+CREATE TABLE Hat(
+	hid INTEGER NOT NULL UNIQUE,
+	description CHAR(20) UNIQUE,
+	price INTEGER,
+	PRIMARY KEY (hid),
+	CHECK (hid>=0),
+	CHECK (price>=0)
+);
+CREATE TABLE Cracker(
+	cid INTEGER NOT NULL UNIQUE,
+	name CHAR(20), 
+	jid INTEGER NOT NULL,
+	gid INTEGER NOT NULL,
+	hid INTEGER NOT NULL,
+	sellprice INTEGER,
+	quantity INTEGER, 
+	PRIMARY KEY (cid),
+	FOREIGN KEY (jid) REFERENCES Joke(jid)
+		ON DELETE CASCADE		
+		ON UPDATE CASCADE,
+	FOREIGN KEY (gid) REFERENCES Gift(gid)
+		ON DELETE CASCADE		
+		ON UPDATE CASCADE,	
+	FOREIGN KEY (hid) REFERENCES Hat(hid)
+		ON DELETE CASCADE		
+		ON UPDATE CASCADE,
+		CHECK (cid>=0),
+		CHECK (saleprice>=0),
+		CHECK (quantity>=0)
+);
